@@ -3,69 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图片压缩工具</title>
+    <title>商品图片批量处理工具</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/cropperjs@1.5.12/dist/cropper.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>图片压缩工具</h1>
-            <p>支持PNG、JPG格式，快速压缩图片体积</p>
+            <h1>商品图片批量处理工具</h1>
+            <p>支持裁剪、压缩，生成电商规格图片</p>
             <p class="author">作者：小黄同学</p>
         </header>
 
         <main>
             <div class="upload-area" id="dropZone">
-                <input type="file" id="fileInput" accept="image/*" hidden>
+                <input type="file" id="fileInput" accept="image/*" multiple hidden>
                 <div class="upload-icon">
                     <svg width="50" height="50" viewBox="0 0 24 24">
                         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                     </svg>
                 </div>
-                <p>拖拽图片到这里，或点击上传</p>
+                <p>拖拽图片到这里，或点击上传（可多选）</p>
             </div>
 
-            <div class="preview-container" id="previewContainer" style="display: none;">
-                <div class="preview-box">
-                    <h3>原始图片</h3>
-                    <div class="image-preview">
-                        <img id="originalPreview" alt="原始图片预览">
-                    </div>
-                    <div class="file-info">
-                        <span>文件大小：</span>
-                        <span id="originalSize">0 KB</span>
-                    </div>
-                </div>
-
-                <div class="preview-box">
-                    <h3>压缩后</h3>
-                    <div class="image-preview">
-                        <img id="compressedPreview" alt="压缩后预览">
-                    </div>
-                    <div class="file-info">
-                        <span>文件大小：</span>
-                        <span id="compressedSize">0 KB</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="controls" id="controls" style="display: none;">
-                <div class="quality-control">
-                    <label for="quality">压缩质量：</label>
-                    <input type="range" id="quality" min="0" max="100" value="80">
-                    <span id="qualityValue">80%</span>
-                </div>
-                <button id="downloadBtn" class="download-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="7 10 12 15 17 10"/>
-                        <line x1="12" y1="15" x2="12" y2="3"/>
-                    </svg>
-                    下载压缩后的图片
+            <div class="upload-list-container" style="display: none;">
+                <h3>待处理图片</h3>
+                <div id="uploadList" class="upload-list"></div>
+                <button id="batchProcessBtn" class="batch-process-btn" style="display: none;">
+                    批量处理全部图片
                 </button>
+            </div>
+
+            <div class="editor" id="imageEditor" style="display: none;">
+                <div class="editor-main">
+                    <div class="crop-container">
+                        <img id="cropperImage" src="" alt="待裁剪图片">
+                    </div>
+                    <div class="editor-controls">
+                        <button id="rotateLeft" class="icon-btn" title="向左旋转">↺</button>
+                        <button id="rotateRight" class="icon-btn" title="向右旋转">↻</button>
+                        <button id="zoomIn" class="icon-btn" title="放大">+</button>
+                        <button id="zoomOut" class="icon-btn" title="缩小">-</button>
+                    </div>
+                </div>
+                <div class="preview-panel">
+                    <div class="preview-item">
+                        <h4>裁剪预览 (800×800)</h4>
+                        <div class="preview-box" id="cropPreview"></div>
+                    </div>
+                    <div class="progress-container" style="display: none;">
+                        <div class="progress-label">处理进度</div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                    <div class="quality-control">
+                        <label>压缩质量：</label>
+                        <input type="range" id="quality" min="1" max="100" value="80">
+                        <span id="qualityValue">80%</span>
+                    </div>
+                    <div class="editor-buttons">
+                        <button id="undoBtn" class="secondary-btn" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 7h6a4 4 0 0 1 4 4v6" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <path d="M3 7l4-4M3 7l4 4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            撤销
+                        </button>
+                        <button id="processBtn" class="primary-btn">处理当前图片</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results" id="resultsContainer" style="display: none;">
+                <h3>处理结果</h3>
+                <div class="results-grid"></div>
+                <div class="download-panel">
+                    <button id="downloadAllBtn" class="download-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        下载所有图片
+                    </button>
+                </div>
             </div>
         </main>
     </div>
+    <script src="https://unpkg.com/cropperjs@1.5.12/dist/cropper.min.js"></script>
     <script src="script.js"></script>
 </body>
+</html> 
 </html> 

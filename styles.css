@@ -61,13 +61,14 @@ header p {
 .upload-area {
     background-color: var(--card-background);
     border-radius: var(--border-radius);
-    padding: 3rem;
+    padding: 2rem;
     text-align: center;
     border: 2px dashed #ddd;
     cursor: pointer;
     transition: var(--transition);
     position: relative;
-    overflow: hidden;
+    margin-bottom: 2rem;
+    min-height: 200px;
 }
 
 .upload-area:hover {
@@ -256,5 +257,481 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .processing .preview-box {
     animation: pulse 1.5s infinite;
+}
+
+.settings {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.setting-group {
+    margin-bottom: 1rem;
+}
+
+.setting-group h3 {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.setting-item {
+    margin: 0.5rem 0;
+}
+
+.setting-item label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.setting-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.images-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.image-card {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+}
+
+.image-card h4 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.image-outputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.output-preview {
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+}
+
+.output-preview img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+}
+
+.output-info {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 编辑器样式 */
+.editor {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.editor-main {
+    position: relative;
+}
+
+.crop-container {
+    width: 100%;
+    height: 500px;
+    background: #f0f0f0;
+    overflow: hidden;
+    position: relative;
+}
+
+.crop-container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.editor-controls {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.preview-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.preview-box {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* 结果展示样式 */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.result-card {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+}
+
+.result-preview {
+    margin-bottom: 1rem;
+}
+
+.result-preview h4 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.result-preview img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: var(--border-radius);
+    background: #f8f8f8;
+}
+
+.primary-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.loading {
+    text-align: center;
+    padding: 1rem;
+    color: #666;
+}
+
+/* 添加加载提示样式 */
+.loading-tip {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    z-index: 9999;
+}
+
+/* 改进移动端适配 */
+@media (max-width: 768px) {
+    .editor {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    
+    .crop-container {
+        height: calc(100vw - 2rem);
+        max-height: 500px;
+    }
+    
+    .preview-box {
+        height: 200px;
+    }
+}
+
+/* Cropper.js 样式覆盖 */
+.cropper-view-box,
+.cropper-face {
+    border-radius: 0;
+}
+
+.cropper-line,
+.cropper-point {
+    background-color: var(--primary-color);
+}
+
+.cropper-view-box {
+    outline: 2px solid var(--primary-color);
+    outline-color: var(--primary-color);
+}
+
+.upload-list {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.upload-item {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background: #f8f8f8;
+    border: 2px solid #eee;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.upload-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.upload-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-item.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.upload-item .remove-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.upload-item:hover .remove-btn {
+    opacity: 1;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.image-item {
+    text-align: center;
+}
+
+.image-item h5 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.image-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    border-radius: var(--border-radius);
+    background: #f8f8f8;
+}
+
+@media (max-width: 768px) {
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 进度条样式 */
+.progress-container {
+    margin: 1rem 0;
+}
+
+.progress-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary-color);
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+/* 状态标记样式 */
+.status-badge {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    color: white;
+}
+
+.status-badge.success {
+    background: #4CAF50;
+}
+
+.status-badge.processing {
+    background: var(--primary-color);
+}
+
+/* 编辑器按钮样式 */
+.editor-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.secondary-btn {
+    background: #f0f0f0;
+    color: #666;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.secondary-btn:hover:not(:disabled) {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.secondary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 拖拽排序样式 */
+.upload-item.sortable-ghost {
+    opacity: 0.5;
+    background: var(--primary-color);
+}
+
+.upload-item.sortable-drag {
+    opacity: 0.8;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .editor-buttons {
+        flex-direction: column;
+    }
+    
+    .quality-control {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .quality-control label {
+        margin-bottom: 0.5rem;
+    }
+    
+    .upload-item {
+        width: calc(50% - 0.5rem);
+        height: calc(50vw - 0.5rem);
+    }
+}
+
+/* 上传列表容器样式 */
+.upload-list-container {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.batch-process-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.upload-list-container {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    margin-top: 1rem;
 }
  
